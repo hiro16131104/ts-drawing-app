@@ -15,7 +15,7 @@ import { UploadPictureBtn } from './components/UploadPictureBtn'
 import { BackCanvasBtn } from './components/BackCanvasBtn'
 
 const FontColor1 = '#fff'
-const FontSize1 = '2.8vh'
+const FontSize1 = '4.3vh'
 const BackColor1 = '#B983FF'
 
 const CustomDiv1 = styled.div`
@@ -33,22 +33,22 @@ const CustomBox1 = styled(Box)`
 `
 const CustomBox1_1 = styled(CustomBox1)`
   width: 100%;
-  height: 5vh;
+  height: 8vh;
   background-color: ${BackColor1};
 `
 const CustomBox1_2 = styled(CustomBox1)`
   width: 100%;
-  height: 90vh;
+  height: 84vh;
   background-color: ${BackColor1};
 `
 const CustomBox1_3 = styled(CustomBox1)`
   width: 100%;
-  height: 90vh;
+  height: 84vh;
   background-color: #ddd;
 `
 const CustomBox1_4 = styled(CustomBox1)`
   width: 100%;
-  height: 5vh;
+  height: 8vh;
   background-color: ${BackColor1};
   justify-content: space-evenly !important;
 `
@@ -153,13 +153,15 @@ export const App = () => {
   const calcCanvasSize = (w: Window) => {
     setCanvasSize({
       width: w.innerWidth,
-      height: w.innerHeight * 0.90
+      height: w.innerHeight * 0.84
     })
   }
 
   useEffect(() => {
     window.addEventListener('load', () => calcCanvasSize(window))
-    window.addEventListener('resize', () => calcCanvasSize(window))
+    /* window.addEventListener('resize', () => calcCanvasSize(window)) */
+    document.addEventListener('mousewheel', (e) => e.preventDefault(), { passive: false })
+    document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false })
   }, [])
 
   return (
