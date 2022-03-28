@@ -66,7 +66,7 @@ const CustomIcon1 = styled(BrushOutlinedIcon)`
 `
 const CustomTitle1 = styled(Typography)`
   color: ${FontColor1};
-  font-size: ${FontSize1};
+  font-size: ${Number(FontSize1.replace('vh', '')) * 0.9}vh;
   transform: skewX(-20deg) skewY(-5deg);
   &:hover {
     cursor: default;
@@ -160,8 +160,9 @@ export const App = () => {
   useEffect(() => {
     window.addEventListener('load', () => calcCanvasSize(window))
     /* window.addEventListener('resize', () => calcCanvasSize(window)) */
+
+    /* PCのみスクロール禁止に */
     document.addEventListener('mousewheel', (e) => e.preventDefault(), { passive: false })
-    document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false })
   }, [])
 
   return (
