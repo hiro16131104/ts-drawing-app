@@ -128,7 +128,10 @@ export const CanvasHistoryContext = createContext({} as {
 
 export const App = () => {
   /* ステートフックを初期化 */
-  const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 })
+  const [canvasSize, setCanvasSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight * 0.84
+  })
   const [isDrag, setIsDrag] = useState(false)
   const [lastPosition, setLastPosition] = useState({ x: -1, y: -1 })
   const [penSettings, setPenSettings] = useState({ color: '#000', width: 3 })
@@ -158,9 +161,6 @@ export const App = () => {
   }
 
   useEffect(() => {
-    window.addEventListener('load', () => calcCanvasSize(window))
-    /* window.addEventListener('resize', () => calcCanvasSize(window)) */
-
     /* PCのみスクロール禁止に */
     document.addEventListener('mousewheel', (e) => e.preventDefault(), { passive: false })
   }, [])

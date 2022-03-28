@@ -3,7 +3,8 @@ import React, { ChangeEvent, ReactEventHandler, useContext } from 'react';
 import styled from '@emotion/styled';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 
-import { FontSize1Context, CanvasSizeContext, CanvasHistoryContext } from '../App'
+import { FontSize1Context, CanvasSizeContext, CanvasHistoryContext, CanvasBackgroundContext } from '../App'
+import { deleteCanvas } from './DeleteCanvasBtn'
 
 type Args4 = {
     id: string,
@@ -27,7 +28,6 @@ const CustomLbl1 = styled('label')`
 const UploadPic = (
     e: ChangeEvent<HTMLInputElement>,
     selector: string,
-    setCanvasHistory: React.Dispatch<React.SetStateAction<ImageData[]>>
 ) => {
     /* 何も選択されていない場合はエラー表示 */
     if (e.target.files == null) {
@@ -111,8 +111,6 @@ const UploadPic = (
     }
     /* ボタンオブジェクトの値をリセット */
     e.target.value = ''
-    /* キャンバスの履歴をリセット */
-    setCanvasHistory([])
 }
 
 /* アップロードボタン */
@@ -120,12 +118,17 @@ export const UploadPictureBtn = (props: Args4) => {
     const { id, selector, color } = props
     const fontSize1 = useContext(FontSize1Context)
     const { canvasHistory, setCanvasHistory } = useContext(CanvasHistoryContext)
+    const { canvasSize, setCanvasSize } = useContext(CanvasSizeContext)
+    const { canvasBackground, setCanvasBackground } = useContext(CanvasBackgroundContext)
 
     return (
         <CustomLbl1 style={{ fontSize: fontSize1, color: color }}>
             <input id={id} style={{ display: 'none' }}
                 type="file" accept="image/*"
-                onChange={(e) => UploadPic(e, selector, setCanvasHistory)} />
+                onChange={(e) => {
+                    deleteCanvas(selector, canvasBackground.color, canvasSize, setCanvasSize, setCanvasHistory)
+                    UploadPic(e, selector)
+                }} />
             <InsertPhotoIcon style={{ fontSize: fontSize1 }} />
         </CustomLbl1>
     )

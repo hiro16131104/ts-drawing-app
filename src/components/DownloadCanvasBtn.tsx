@@ -3,8 +3,8 @@ import React, { ReactEventHandler, useContext } from 'react';
 import styled from '@emotion/styled';
 import DownloadIcon from '@mui/icons-material/Download';
 
-import { CustomBtn1, FontSize1Context } from '../App'
-import { Args3 } from './DeleteCanvasBtn'
+import { CanvasBackgroundContext, CanvasHistoryContext, CanvasSizeContext, CustomBtn1, FontSize1Context } from '../App'
+import { Args3, deleteCanvas } from './DeleteCanvasBtn'
 
 /* ダウンロードファイルのプレフィックスを作成 */
 const CreatePrefix_DateTime = (): string => {
@@ -47,6 +47,9 @@ const DownloadBlob = (selector: string) => {
 
 /* ダウンロードボタン */
 export const DownloadCanvasBtn = (props: Args3) => {
+    const { canvasBackground, setCanvasBackground } = useContext(CanvasBackgroundContext)
+    const { canvasHistory, setCanvasHistory } = useContext(CanvasHistoryContext)
+    const { canvasSize, setCanvasSize } = useContext(CanvasSizeContext)
     const fontSize1 = useContext(FontSize1Context)
 
     const downloadCanvas = (
@@ -59,7 +62,10 @@ export const DownloadCanvasBtn = (props: Args3) => {
     }
 
     return (
-        <CustomBtn1 id={props.id} onClick={(e) => downloadCanvas(e, props.selector)}>
+        <CustomBtn1 id={props.id} onClick={(e) => {
+            downloadCanvas(e, props.selector)
+            deleteCanvas(props.selector, canvasBackground.color, canvasSize, setCanvasSize, setCanvasHistory)
+        }}>
             <DownloadIcon style={{ fontSize: fontSize1 }} />
         </CustomBtn1>
     )

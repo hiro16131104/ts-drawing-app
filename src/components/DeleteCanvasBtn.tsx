@@ -12,13 +12,17 @@ export type Args3 = {
 }
 
 /* キャンバスを初期状態にする */
-const deleteCanvas = (
+export const deleteCanvas = (
     selector: string,
     canvasBackColor: string,
     canvasSize: {
         width: number,
         height: number
     },
+    setCanvasSize: React.Dispatch<React.SetStateAction<{
+        width: number;
+        height: number;
+    }>>,
     setCanvasHistory: React.Dispatch<React.SetStateAction<ImageData[]>>
 ) => {
     const canvas = document.querySelector(selector) as HTMLCanvasElement
@@ -28,6 +32,10 @@ const deleteCanvas = (
     context?.clearRect(0, 0, canvas.width, canvas.height)
 
     /* キャンバスのサイズを再度設定 */
+    setCanvasSize({
+        width: window.innerWidth,
+        height: window.innerHeight * 0.84
+    })
     canvas.width = canvasSize.width
     canvas.height = canvasSize.height
 
@@ -49,7 +57,7 @@ export const DeleteCanvasBtn = (props: Args3) => {
 
     return (
         <CustomBtn1 id={props.id}
-            onClick={() => deleteCanvas(props.selector, canvasBackground.color, canvasSize, setCanvasHistory)}>
+            onClick={() => deleteCanvas(props.selector, canvasBackground.color, canvasSize, setCanvasSize, setCanvasHistory)}>
             <DeleteForeverIcon style={{ fontSize: fontSize1 }} />
         </CustomBtn1>
     )
