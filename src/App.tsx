@@ -15,7 +15,7 @@ import { UploadPictureBtn } from './components/UploadPictureBtn'
 import { BackCanvasBtn } from './components/BackCanvasBtn'
 
 const FontColor1 = '#fff'
-const FontSize1 = '4.3vh'
+const FontSize1 = '4.0vh'
 const BackColor1 = '#B983FF'
 
 const CustomDiv1 = styled.div`
@@ -33,22 +33,18 @@ const CustomBox1 = styled(Box)`
 `
 const CustomBox1_1 = styled(CustomBox1)`
   width: 100%;
-  height: 8vh;
   background-color: ${BackColor1};
 `
 const CustomBox1_2 = styled(CustomBox1)`
   width: 100%;
-  height: 84vh;
   background-color: ${BackColor1};
 `
 const CustomBox1_3 = styled(CustomBox1)`
   width: 100%;
-  height: 84vh;
   background-color: #ddd;
 `
 const CustomBox1_4 = styled(CustomBox1)`
   width: 100%;
-  height: 8vh;
   background-color: ${BackColor1};
   justify-content: space-evenly !important;
 `
@@ -127,10 +123,11 @@ export const CanvasHistoryContext = createContext({} as {
 })
 
 export const App = () => {
+  const height = window.innerHeight
   /* ステートフックを初期化 */
   const [canvasSize, setCanvasSize] = useState({
     width: window.innerWidth,
-    height: window.innerHeight * 0.84
+    height: height * 0.84
   })
   const [isDrag, setIsDrag] = useState(false)
   const [lastPosition, setLastPosition] = useState({ x: -1, y: -1 })
@@ -174,14 +171,14 @@ export const App = () => {
 
               <CustomDiv1 id={'main1'}>
                 {/* ヘッダー部分（タイトルエリア） */}
-                <CustomBox1_1 id={'header1'}>
+                <CustomBox1_1 id={'header1'} style={{ height: height * 0.08 }}>
                   <CustomIcon1 id={'titleIcon1'} onTouchStart={undefined} />
                   <h1><CustomTitle1 id={'title1'}>oekaki</CustomTitle1></h1>
                 </CustomBox1_1>
 
                 {/* ボディ部分（描画エリア） */}
-                <CustomBox1_2 id={'body1'}>
-                  <CustomBox1_3 id={'body1-1'}>
+                <CustomBox1_2 id={'body1'} style={{ height: height * 0.84 }}>
+                  <CustomBox1_3 id={'body1-1'} style={{ height: height * 0.84 }}>
                     <DragFlgContext.Provider value={dragFlgVal}>
                       <LastPositionContext.Provider value={lastPositionVal}>
                         <DrawArea id={'drawArea1'}></DrawArea>
@@ -191,7 +188,7 @@ export const App = () => {
                 </CustomBox1_2>
 
                 {/* フッター部分（メニューエリア） */}
-                <CustomBox1_4 id={'footer'}>
+                <CustomBox1_4 id={'footer'} style={{ height: height * 0.08 }}>
                   <UploadPictureBtn id={'uploadPictureBtn1'} selector={selector1} color={FontColor1} />
 
                   <DownloadCanvasBtn id={'downloadCanvasBtn1'} selector={selector1} />
